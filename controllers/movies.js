@@ -1,13 +1,9 @@
-require("dotenv").config();
-
 const mongoose = require("mongoose");
 const httpConstants = require("http2").constants;
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+
 const Movie = require("../models/movie");
 const BadRequestError = require("../errors/BadRequest");
 const NotFoundError = require("../errors/NotFound");
-const ConflictError = require("../errors/Conflict");
 
 module.exports.getMovies = (req, res, next) => {
   Movie.find({})
@@ -59,7 +55,9 @@ module.exports.deleteMovie = (req, res, next) => {
       if (!movie) {
         throw new NotFoundError("Фильм не найден");
       }
-
+      if (!movie.owner.equals(req.user._id)) {
+        throw new ForbiddenError("Нет доступа для удаления карточки");
+      }
       Movie.deleteOne(movie)
         .then(() => {
           res

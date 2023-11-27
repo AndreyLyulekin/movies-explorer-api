@@ -12,10 +12,10 @@ const ConflictError = require("../errors/Conflict");
 const { JWT_SECRET } = process.env;
 
 module.exports.editUserData = (req, res, next) => {
-  const { name, about } = req.body;
+  const { name, email } = req.body;
   User.findByIdAndUpdate(
     req.user._id,
-    { name, about },
+    { name, email },
     { new: true, runValidators: true }
   )
     .orFail()
@@ -38,21 +38,17 @@ module.exports.getMeUser = (req, res, next) => {
 };
 
 module.exports.addUser = (req, res, next) => {
-  const { name, about, avatar, email, password } = req.body;
+  const { name, email, password } = req.body;
   bcrypt
     .hash(password, 10)
     .then((hash) =>
       User.create({
         name,
-        about,
-        avatar,
         email,
         password: hash,
       }).then((user) =>
         res.status(httpConstants.HTTP_STATUS_CREATED).send({
           name: user.name,
-          about: user.about,
-          avatar: user.avatar,
           _id: user._id,
           email: user.email,
         })
