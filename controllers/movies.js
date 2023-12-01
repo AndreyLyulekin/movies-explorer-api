@@ -4,6 +4,7 @@ const httpConstants = require("http2").constants;
 const Movie = require("../models/movie");
 const BadRequestError = require("../errors/BadRequest");
 const NotFoundError = require("../errors/NotFound");
+const ForbiddenError = require("../errors/Forbidden");
 
 module.exports.getMovies = (req, res, next) => {
   Movie.find({})

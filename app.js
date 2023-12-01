@@ -9,6 +9,7 @@ const helmet = require("helmet");
 const { errors } = require("celebrate");
 
 // IMPORT MIDDLEWARES
+const limiter = require("./middlewares/limiter");
 const cors = require("./middlewares/cors");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
@@ -27,6 +28,7 @@ mongoose.connect(DB_URL || "mongodb://127.0.0.1:27017/bitfilmsdb", {
 
 // DEFENSE MIDDLEWARES
 app.use(helmet());
+app.use(limiter);
 app.use(cors);
 
 // REQUEST LOGGER
