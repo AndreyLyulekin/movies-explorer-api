@@ -16,7 +16,6 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 // CONFIG VARIABLES
 const { PORT, DB_URL } = process.env;
 const API_URL = process.env.NODE_ENV === "development" ? "/" : "/api/";
-const NotFoundError = require("./errors/NotFound");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,10 +34,6 @@ app.use(cors);
 app.use(requestLogger);
 
 app.use(`${API_URL}`, require("./routes/index"));
-
-app.use("*", (req, res, next) => {
-  next(new NotFoundError("Страница не найдена"));
-});
 
 // ERRORS
 app.use(errorLogger);

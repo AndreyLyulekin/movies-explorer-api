@@ -22,7 +22,7 @@ module.exports = {
   rules: {
     "no-console": "off",
     quotes: ["error", "double"],
-    "no-underscore-dangle": 0,
+    "no-underscore-dangle": ["error", { allow: ["_id"] }],
     "comma-dangle": "off",
     "no-useless-escape": "off",
     "consistent-return": "off",
