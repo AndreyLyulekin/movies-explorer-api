@@ -24,7 +24,11 @@ module.exports.editUserData = (req, res, next) => {
     .then((user) => res.status(httpConstants.HTTP_STATUS_OK).send(user))
     .catch((err) => {
       if (err.code === 11000) {
-        next(new ConflictError("Пользователь с указанным email уже зарегистрирован в системе"));
+        next(
+          new ConflictError(
+            "Пользователь с указанным email уже зарегистрирован в системе"
+          )
+        );
       } else if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequestError(err.message));
       } else {
@@ -43,15 +47,12 @@ module.exports.addUser = (req, res, next) => {
   const { name, email, password } = req.body;
   bcrypt
     .hash(password, 10)
-    .then((hash) => User.create({
-      name,
-      email,
-      password: hash,
-    }).then((user) => res.status(httpConstants.HTTP_STATUS_CREATED).send({
-      name: user.name,
-      _id: user._id,
-      email: user.email,
-    })))
+    .then((hash) => User.create({ name, email, password: hash, })
+      .then((user) => res.status(httpConstants.HTTP_STATUS_CREATED).send({
+        name: user.name,
+        _id: user._id,
+        email: user.email,
+      })))
     .catch((err) => {
       if (err.code === 11000) {
         next(new ConflictError("Пользаватель уже зарегистрирован"));

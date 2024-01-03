@@ -12,7 +12,7 @@ const createMovieValidator = celebrate({
     image: Joi.string().required().pattern(urlValidation),
     trailerLink: Joi.string().required().pattern(urlValidation),
     thumbnail: Joi.string().required().pattern(urlValidation),
-    movieId: Joi.string().required(),
+    movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),
@@ -51,5 +51,5 @@ module.exports = {
   deleteMovieValidator,
   signinValidator,
   signUpValidator,
-  editUserValidator
+  editUserValidator,
 };
