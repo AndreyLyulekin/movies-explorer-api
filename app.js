@@ -15,7 +15,8 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 // CONFIG VARIABLES
 const { PORT, DB_URL } = process.env;
-const API_URL = process.env.NODE_ENV === "development" ? "/" : "/api";
+const API_URL = process.env.NODE_ENV === "development" ? "/" : "/api/";
+console.log(API_URL);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
